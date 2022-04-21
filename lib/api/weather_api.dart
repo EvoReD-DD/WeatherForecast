@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as https;
 import 'package:weather_list_ui/models/weather_seven_days_daily_model.dart';
 import 'package:weather_list_ui/utilities/constants.dart';
@@ -14,9 +13,8 @@ class WeatherApi {
     };
     var uri = Uri.https(Constants.Weather_Base_Domain,
         Constants.Weather_Forecast_Path, queryParameters);
-    log('request: ${uri.toString()}');
     var response = await https.get(uri);
-    print('response: ${response.body}');
+    //print('response: ${response.body}');
     if (response.statusCode == 200) {
       return WeatherForecast.fromJson(json.decode(response.body));
     } else {

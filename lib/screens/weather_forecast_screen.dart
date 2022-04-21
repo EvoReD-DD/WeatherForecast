@@ -3,6 +3,7 @@ import 'package:weather_list_ui/api/weather_api.dart';
 import 'package:weather_list_ui/models/weather_seven_days_daily_model.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:weather_list_ui/widgets/city_view.dart';
+import 'package:weather_list_ui/widgets/temp_view.dart';
 
 class WeatherForecastScreen extends StatefulWidget {
   const WeatherForecastScreen({Key? key}) : super(key: key);
@@ -19,9 +20,9 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
     super.initState();
     forecastObject =
         WeatherApi().fetchWeatherForecastWithCity(cityName: _cityName);
-    forecastObject!.then((weather) {
-      print(weather.list![0].weather![0].main);
-    });
+    // forecastObject!.then((weather) {
+    //   print(weather.list![0].weather![0].main);
+    // });
   }
 
   @override
@@ -46,7 +47,24 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
               if (snapshot.hasData) {
                 return Column(
                   children: [
-                    CityView(),
+                    _searcher(),
+                    SafeArea(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CityView(
+                              snapshot: snapshot,
+                            ),
+                            Divider(),
+                            TempView(snapshot: snapshot),
+                            Divider(),
+                            _temperatureForecast(),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 );
               } else {
@@ -64,28 +82,28 @@ class _WeatherForecastScreenState extends State<WeatherForecastScreen> {
   }
 }
 
-Widget _buildBody() {
-  return Column(
-    children: [
-      _searcher(),
-      SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(left: 16, right: 16, top: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _weatherDescription(),
-              Divider(),
-              _currentTemperature(),
-              Divider(),
-              _temperatureForecast(),
-            ],
-          ),
-        ),
-      ),
-    ],
-  );
-}
+// Widget _buildBody() {
+//   return Column(
+//     children: [
+//       _searcher(),
+//       SafeArea(
+//         child: Padding(
+//           padding: EdgeInsets.only(left: 16, right: 16, top: 16),
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               _weatherDescription(),
+//               Divider(),
+//               //_currentTemperature(),
+//               Divider(),
+//               _temperatureForecast(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     ],
+//   );
+// }
 
 Padding _searcher() {
   return Padding(
@@ -105,127 +123,6 @@ Padding _searcher() {
         ),
       ],
     ),
-  );
-}
-
-Column _weatherDescription() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Text(
-        "Murmansk Oblast, RU",
-        style: TextStyle(
-          fontSize: 32,
-          color: Colors.white70,
-        ),
-      ),
-      SizedBox(
-        height: 6,
-      ),
-      Text(
-        "Fridey, Mar 20,2020",
-        style: TextStyle(
-          color: Colors.white38,
-          fontWeight: FontWeight.bold,
-          fontSize: 18,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    ],
-  );
-}
-
-Column _currentTemperature() {
-  return Column(
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.wb_sunny,
-            color: Colors.white,
-            size: 60,
-          ),
-          SizedBox(
-            width: 8,
-          ),
-          Column(
-            children: [
-              Text(
-                "15 °F",
-                style: TextStyle(
-                    color: Colors.white38,
-                    fontSize: 50,
-                    fontWeight: FontWeight.w300),
-              ),
-              Text(
-                "LIGHT SNOW",
-                style: TextStyle(
-                    color: Colors.white38,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-        ],
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 40.0, bottom: 40),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Column(
-              children: [
-                Icon(
-                  Icons.cloud,
-                  color: Colors.white,
-                ),
-                Text(
-                  "5",
-                  style: TextStyle(color: Colors.white54, fontSize: 18),
-                ),
-                Text(
-                  "km/h",
-                  style: TextStyle(color: Colors.white54, fontSize: 18),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Icon(
-                  Icons.cloud,
-                  color: Colors.white,
-                ),
-                Text(
-                  "3",
-                  style: TextStyle(color: Colors.white54, fontSize: 18),
-                ),
-                Text(
-                  "%",
-                  style: TextStyle(color: Colors.white54, fontSize: 18),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Icon(
-                  Icons.cloud,
-                  color: Colors.white,
-                ),
-                Text(
-                  "20",
-                  style: TextStyle(color: Colors.white54, fontSize: 18),
-                ),
-                Text(
-                  "%",
-                  style: TextStyle(color: Colors.white54, fontSize: 18),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    ],
   );
 }
 
