@@ -10,12 +10,11 @@ class CityView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var forecastList = snapshot?.data?.list?[0].dt;
+    var forecastList = snapshot?.data?.list;
     var city = snapshot?.data?.city?.name;
     var country = snapshot?.data?.city?.country;
     var formattedDate =
-        DateTime.fromMillisecondsSinceEpoch((forecastList ?? 1) * 1000);
-    log('${formattedDate.toString()}');
+        DateTime.fromMillisecondsSinceEpoch((forecastList?[0].dt ?? 1) * 1000);
     return Container(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +30,7 @@ class CityView extends StatelessWidget {
           height: 6,
         ),
         Text(
-          '${Util.getFormattedDate(formattedDate)}}',
+          '${Util.getFormattedDate(formattedDate)}',
           style: TextStyle(
             color: Colors.white38,
             fontWeight: FontWeight.bold,

@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:weather_list_ui/models/weather_seven_days_daily_model.dart';
-import 'package:weather_list_ui/utilities/forecast_util.dart';
+import 'package:weather_list_ui/widgets/detail_view.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TempView extends StatelessWidget {
   final AsyncSnapshot<WeatherForecast>? snapshot;
@@ -10,18 +9,20 @@ class TempView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var temp = snapshot?.data?.list?[0].temp?.day;
-    var weather = snapshot?.data?.list?[0].weather?[0].main;
+    var forecastList = snapshot?.data?.list;
+    var temp = forecastList?[0].temp?.day?.round();
+    var weather = forecastList?[0].weather?[0].description?.toUpperCase();
+    var icon = forecastList?[0].getIconUrl();
 
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.wb_sunny,
+            Image.network(
+              icon ?? '',
               color: Colors.white,
-              size: 60,
+              scale: 0.7,
             ),
             SizedBox(
               width: 8,
@@ -29,7 +30,7 @@ class TempView extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  '$temp',
+                  '$temp °C',
                   style: TextStyle(
                       color: Colors.white38,
                       fontSize: 50,
@@ -46,61 +47,8 @@ class TempView extends StatelessWidget {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 40.0, bottom: 40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                children: [
-                  Icon(
-                    Icons.cloud,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "5",
-                    style: TextStyle(color: Colors.white54, fontSize: 18),
-                  ),
-                  Text(
-                    "km/h",
-                    style: TextStyle(color: Colors.white54, fontSize: 18),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Icon(
-                    Icons.cloud,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "3",
-                    style: TextStyle(color: Colors.white54, fontSize: 18),
-                  ),
-                  Text(
-                    "%",
-                    style: TextStyle(color: Colors.white54, fontSize: 18),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Icon(
-                    Icons.cloud,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    "20",
-                    style: TextStyle(color: Colors.white54, fontSize: 18),
-                  ),
-                  Text(
-                    "%",
-                    style: TextStyle(color: Colors.white54, fontSize: 18),
-                  ),
-                ],
-              ),
-            ],
-          ),
+        DetailDailyView(
+          snapshot: snapshot,
         ),
       ],
     );

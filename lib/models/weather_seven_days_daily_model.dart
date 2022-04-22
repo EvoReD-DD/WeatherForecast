@@ -10,20 +10,20 @@ class WeatherForecast {
   WeatherForecast({this.city, this.cod, this.message, this.cnt, this.list});
 
   WeatherForecast.fromJson(Map<String, dynamic> json) {
-    city = json['city'] != null ? new City.fromJson(json['city']) : null;
+    city = json['city'] != null ? City.fromJson(json['city']) : null;
     cod = json['cod'];
     message = json['message'].toDouble();
     cnt = json['cnt'];
     if (json['list'] != null) {
       list = <WeatherList>[];
       json['list'].forEach((v) {
-        list!.add(new WeatherList.fromJson(v));
+        list!.add(WeatherList.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.city != null) {
       data['city'] = this.city!.toJson();
     }
@@ -177,7 +177,7 @@ class WeatherList {
   }
 
   String getIconUrl() {
-    return Constants.Weather_image_url + weather?[0].icon + '.png';
+    return Constants.Weather_image_url + (weather?[0].icon ?? '') + '.png';
   }
 }
 
