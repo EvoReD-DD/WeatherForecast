@@ -1,4 +1,4 @@
-#Sat Apr 23 14:40:14 EEST 2022
+#Sat Apr 23 15:16:30 EEST 2022
 base.0=E\:\\FlutterProjects\\StaticListFlutter\\weather_list_ui\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

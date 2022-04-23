@@ -10,7 +10,7 @@ class LocationScreen extends StatefulWidget {
   const LocationScreen({Key? key}) : super(key: key);
 
   @override
-  State<LocationScreen> createState() => _LocationScreenState();
+  _LocationScreenState createState() => _LocationScreenState();
 }
 
 class _LocationScreenState extends State<LocationScreen> {
@@ -18,16 +18,17 @@ class _LocationScreenState extends State<LocationScreen> {
     try {
       var weatherInfo = await WeatherApi().fetchWeatherForecast();
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return WeatherForecastScreen(weatherInfo);
+        return WeatherForecastScreen(locationWeather: weatherInfo);
       }));
     } catch (e) {
       log('$e');
     }
-    @override
-    void initState() {
-      super.initState();
-      getLocationData();
-    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLocationData();
   }
 
   @override

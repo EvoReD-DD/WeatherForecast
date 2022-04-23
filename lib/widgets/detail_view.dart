@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_list_ui/models/weather_seven_days_daily_model.dart';
 import 'package:weather_list_ui/utilities/forecast_util.dart';
 
-class DetailDailyView extends StatelessWidget {
+class DetailView extends StatelessWidget {
   final AsyncSnapshot<WeatherForecast>? snapshot;
-  const DetailDailyView({required this.snapshot});
+  const DetailView({required this.snapshot});
 
   @override
   Widget build(BuildContext context) {

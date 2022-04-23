@@ -47,7 +47,7 @@ class TempView extends StatelessWidget {
             ),
           ],
         ),
-        DetailDailyView(
+        DetailView(
           snapshot: snapshot,
         ),
       ],
